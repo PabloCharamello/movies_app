@@ -3,6 +3,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+}
+
+.list-movies {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 300px;
+  padding: 0;
 }
 
 main {
@@ -10,8 +20,18 @@ main {
   justify-content: center;
 }
 
+li {
+  list-style: none;
+}
+
 form {
   align-items: center;
   display: flex;
   justify-content: center;
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+  color: red;
 }

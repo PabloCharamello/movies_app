@@ -1,6 +1,6 @@
 function ListOfMovies({ movies }) {
   return (
-    <ul className="page">
+    <ul className="list-movies">
       {movies.map((movie) => (
         <li key={movie.id}>
           <h2>{movie.title}</h2>
