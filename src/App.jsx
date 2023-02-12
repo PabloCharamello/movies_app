@@ -1,42 +1,45 @@
 import "./App.css";
 import { useMovies } from "./hooks/useMovies";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Movies } from "./components/Movies";
-//import { useRef } from "react";
 
-function App() {
-  const { movies } = useMovies();
-  //const inputRef = useRef();
-  const [query, setQuery] = useState("");
+function useSearch() {
+  const [search, updateSearch] = useState("");
   const [error, setError] = useState(null);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // const { query } = Object.fromEntries(new window.FormData(event.target));
-    console.log({ query });
-
-    // const inputEl = inputRef.current;
-    // const value = inputEl.value;
-    // console.log(value);
-  };
-
-  const handleChange = (event) => {
-    const newQuery = event.target.value;
-    if (newQuery.startsWith(" ")) return;
-    setQuery(event.target.value);
-  };
+  const isFirstInput = useRef(true);
 
   useEffect(() => {
-    if (query === "") {
+    if (isFirstInput.current) {
+      isFirstInput.current = search === "";
+      return;
+    }
+
+    if (search === "") {
       setError("No se han ingresado peliculas");
       return;
     }
-    if (query.length < 3) {
+    if (search.length < 3) {
       setError("Debe ingresar al menos 3 caracteres");
       return;
     }
     setError(null);
-  }, [query]);
+  }, [search]);
+
+  return { search, updateSearch, error };
+}
+
+function App() {
+  const { movies } = useMovies();
+  const { search, updateSearch, error } = useSearch();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log({ search });
+  };
+
+  const handleChange = (event) => {
+    updateSearch(event.target.value);
+  };
 
   return (
     <div className="page">
@@ -50,8 +53,8 @@ function App() {
             }}
             // ref={inputRef}
             onChange={handleChange}
-            value={query}
-            name="query"
+            value={search}
+            name="search"
             type="text"
             placeholder="The Matrix, Aliens, Armageddon..."
           />
