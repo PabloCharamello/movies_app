@@ -7,17 +7,23 @@
 }
 
 .list-movies {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 300px;
+  max-width: 300px; */
   padding: 0;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  align-items: last baseline;
 }
 
 main {
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
 li {
@@ -34,4 +40,18 @@ form {
   display: flex;
   justify-content: center;
   color: red;
+}
+
+.movie {
+  text-align: center;
+}
+
+.movie h3,
+.movie p {
+  padding: 0;
+  margin: 0;
+}
+
+.movie img {
+  border-radius: 10px;
 }
