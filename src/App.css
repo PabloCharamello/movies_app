@@ -54,6 +54,6 @@ form {
 
 .movie img {
   border-radius: 10px;
-  height: 370px;
+  min-height: 370px;
   width: 300px;
 }
