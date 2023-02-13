@@ -57,10 +57,6 @@ function App() {
     debouncedGetMovies(newSearch);
   };
 
-  useEffect(() => {
-    console.log("getMovies");
-  }, [getMovies]);
-
   return (
     <div className="page">
       <header>
@@ -71,7 +67,6 @@ function App() {
               border: "1px solid transparent",
               borderColor: error ? "red" : "transparent",
             }}
-            // ref={inputRef}
             onChange={handleChange}
             value={search}
             name="search"
