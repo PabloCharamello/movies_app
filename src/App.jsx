@@ -1,7 +1,8 @@
 import "./App.css";
 import { useMovies } from "./hooks/useMovies";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Movies } from "./components/Movies";
+import debounce from "just-debounce-it";
 
 function useSearch() {
   const [search, updateSearch] = useState("");
@@ -33,9 +34,17 @@ function App() {
   const { search, updateSearch, error } = useSearch();
   const { movies, getMovies, loading } = useMovies({ search, sort });
 
+  const debouncedGetMovies = useCallback(
+    debounce((search) => {
+      console.log("search: " + search);
+      getMovies({ search });
+    }, 300),
+    []
+  );
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    getMovies();
+    getMovies({ search });
   };
 
   const handleSort = () => {
@@ -43,8 +52,14 @@ function App() {
   };
 
   const handleChange = (event) => {
-    updateSearch(event.target.value);
+    const newSearch = event.target.value;
+    updateSearch(newSearch);
+    debouncedGetMovies(newSearch);
   };
+
+  useEffect(() => {
+    console.log("getMovies");
+  }, [getMovies]);
 
   return (
     <div className="page">
@@ -64,7 +79,7 @@ function App() {
             placeholder="The Matrix, Alien, Armageddon..."
           />
           <button type="submit">Search</button>
-          <input type="checkbox" onChange={handleSort} cheked={sort} />
+          <input type="checkbox" onChange={handleSort} checked={sort} />
           <p>Alphabetical order</p>
         </form>
         <p className="error">{error}</p>
