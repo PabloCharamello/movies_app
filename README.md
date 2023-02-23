@@ -8,4 +8,4 @@
 
 - UseMemo()
 
-- Fetching de datos a la API de imdb
+- Fetching de datos a la API de omdb
